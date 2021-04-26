@@ -1,15 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Node struct {
 	value string
 	next  *Node
-}
-
-type Test struct {
-	value string
-	next  *Test
 }
 
 type Methods interface {
@@ -21,21 +18,23 @@ type LinkedList struct {
 }
 
 func (ll *LinkedList) add(node Node) {
-	temp := ll.head
-	ll.head = node
-	ll.head.next = &temp
-}
-
-func NewTest() *Test {
-	return &Test{value: "test1"}
+	println(ll)
+	self := *ll
+	if self.head.value == nil {
+		// head is empty, so just put the value there
+		ll.head = node
+	} else {
+		temp := ll.head
+		ll.head = node
+		ll.head.next = &temp
+	}
 }
 
 func New() LinkedList {
-	return LinkedList{head: Node{value: "head"}}
+	return LinkedList{}
 }
 
 var LL = New()
-var T = NewTest()
 
 func main() {
 	fmt.Println(LL)

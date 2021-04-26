@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func main() {
+func example() {
 	// storing the hexadecimal
 	// values in variables
 	x := "Hello World"
@@ -19,4 +19,25 @@ func main() {
 	fmt.Printf("x is now: %s \n", x) // x = "dlrow olleh"
 
 	fmt.Println(&x == y) // prints true because y is the address value of x
+
+}
+
+func main() {
+	// swap example
+	a := 1
+	b := 2
+
+	fmt.Println("a=", a)
+	fmt.Println("b=", b)
+
+	swap(&a, &b)
+
+	fmt.Println("a=", a)
+	fmt.Println("b=", b)
+}
+
+func swap(a *int, b *int) {
+	temp := *a
+	*a = *b
+	*b = temp
 }
