@@ -14,19 +14,18 @@ type Methods interface {
 }
 
 type LinkedList struct {
-	head Node
+	head *Node
 }
 
-func (ll *LinkedList) add(node Node) {
-	println(ll)
+func (ll *LinkedList) add(node *Node) {
+	// nodes are passed to the function, but we only use the pointers
 	self := *ll
-	if self.head.value == nil {
-		// head is empty, so just put the value there
-		ll.head = node
+	if self.head == nil {
+		self.head = node
 	} else {
-		temp := ll.head
-		ll.head = node
-		ll.head.next = &temp
+		temp := self.head
+		self.head = node
+		self.head.next = temp
 	}
 }
 
@@ -41,6 +40,6 @@ func main() {
 
 	// add a new node
 	n := Node{value: "new node"}
-	LL.add(n)
+	LL.add(&n)
 	fmt.Println(LL.head.next)
 }
