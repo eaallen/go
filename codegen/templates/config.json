@@ -1,17 +1,32 @@
 {
-  "react-function": {
-		"default_name": "basic_function_comp_RENAME_ME_THIS_WAS_GENERATED",
-		"ext":          ".js",
-		"path":         "react/basic_function_comp.txt"
-	},
-	"react-class": {
-		"default_name": "basic_class_comp",
-		"ext":          ".js",
-		"path":         "react/basic_class_comp.txt"
-	},
-	"go-main": {
-		"default_name": "generated_main",
-		"ext":          ".go",
-		"path":         "go/main.txt"
-	}
+  "template":{
+    "react-function": {
+      "default_name": "basic_function_comp_RENAME_ME_THIS_WAS_GENERATED",
+      "ext": ".js",
+      "path": "react/basic_function_comp.txt"
+    },
+    "react-class": {
+      "default_name": "basic_class_comp",
+      "ext": ".js",
+      "path": "react/basic_class_comp.txt"
+    },
+    "react-app-context": {
+      "default_name": "basic_app_context_class",
+      "ext": ".js",
+      "path": "react/basic_app_context_class.txt"
+    },
+    "react-with-app-context": {
+      "default_name": "basic_with_app_context",
+      "ext": ".js",
+      "path": "react/basic_with_app_context.txt"
+    },
+    "go-main": {
+      "default_name": "generated_main",
+      "ext": ".go",
+      "path": "go/main.txt"
+    }
+  },
+  "batch":{
+    "react-context":["react-app-context","react-with-app-context"]
+  }
 }

@@ -20,13 +20,20 @@ func Check(e error) {
 
 var options struct {
 	help          bool
+	batch         string
 	template_name string
 	path          string
 	name          string
 }
 
+type Config struct {
+	Template map[string]map[string]string `json:"template"`
+	Batch    map[string][]string          `json:"batch"`
+}
+
 func init() {
 	flag.BoolVar(&options.help, "help", false, "Enter the number of posts you would love to see")
+	flag.StringVar(&options.batch, "batch", "", "expect many templates")
 	flag.StringVar(&options.template_name, "template", "", "name of the template you want generated")
 	flag.StringVar(&options.path, "path", "", "path other than working directory, if non empty this path will be used instead of working directory")
 	flag.StringVar(&options.name, "name", "", "custom name for genrated file")
@@ -36,17 +43,41 @@ func init() {
 func main() {
 	if options.help {
 		Usage()
+		return
 	} else {
-		template_data := GetConfig()[options.template_name]
-		// eventualy direct path to template location
-		data, err := ioutil.ReadFile("C:/go/github.com/eaallen/go/codegen/templates/" + template_data["path"])
-		Check(err)
-		name := GetName(options.name, template_data["default_name"])
-		path := GetPath(options.path)
-		fullpath := path + GetEnviromentSlash() + name + template_data["ext"]
-		err = WriteToFile(fullpath, string(data))
-		Check(err)
-		color.Green("Successfully built " + name + " at " + fullpath)
+		var used_flag string
+		config := GetConfig()
+		templates := []map[string]string{}
+
+		if options.batch != "" {
+			used_flag = "batch"
+			// get batch data
+			for _, el := range config.Batch[options.batch] {
+				templates = append(templates, config.Template[el])
+			}
+		} else {
+			used_flag = "template"
+			templates = append(templates, config.Template[options.template_name])
+		}
+
+		if len(templates) == 0 {
+			color.Red("Error: " + used_flag + " or batch key not found!")
+			return
+		}
+
+		for _, template_data := range templates {
+			// eventualy direct path to template location
+			data, err := ioutil.ReadFile("C:/go/github.com/eaallen/go/codegen/templates/" + template_data["path"])
+			Check(err)
+			name := GetName(options.name, template_data["default_name"])
+			path := GetPath(options.path)
+			fullpath := path + GetEnviromentSlash() + name + template_data["ext"]
+			err = WriteToFile(fullpath, string(data))
+			Check(err)
+			color.Green("Successfully built " + name + " at " + fullpath)
+		}
+		color.Green("Finished")
+		return
 	}
 }
 
@@ -83,19 +114,16 @@ func Usage() {
 	flag.PrintDefaults()
 }
 
-func GetConfig() map[string]map[string]string {
+func GetConfig() Config {
 	// Open our jsonFile
 	jsonFile, err := os.Open("./templates/config.json")
 	Check(err)
 	// defer the closing of our jsonFile so that we can parse it later on
 	defer jsonFile.Close()
 
-	byteValue, _ := ioutil.ReadAll(jsonFile)
+	data := UnmarshallJSON(jsonFile)
 
-	var res map[string]map[string]string
-	json.Unmarshal([]byte(byteValue), &res)
-
-	return res
+	return data
 }
 
 func IsWindows() bool {
@@ -107,4 +135,18 @@ func GetEnviromentSlash() string {
 		return "\\"
 	}
 	return "/"
+}
+
+func UnmarshallJSON(jsonFile *os.File) Config {
+	// read our opened jsonFile as a byte array.
+	byteValue, _ := ioutil.ReadAll(jsonFile)
+
+	// we initialize our Users array
+	var config Config
+
+	// we unmarshal our byteArray which contains our
+	// jsonFile's content
+	json.Unmarshal(byteValue, &config)
+
+	return config
 }

@@ -1,0 +1,12 @@
+import React from 'react';
+import AppCtx from './AppContext'
+
+export default function withAppContext(Component) {
+	return function contextComponent(props) {
+		return (
+			<AppCtx.Consumer>
+				{(context) => <Component {...props} context={context} />}
+			</AppCtx.Consumer>
+		)
+	}
+}

@@ -1,0 +1,25 @@
+import React from 'react'
+const AppCtx = React.createContext()
+
+class AppContext extends React.Component {
+	constructor(props) {
+		super(props)
+		this.actions = {}
+		this.state = {}
+	}
+	// ------------------------------------- Render Method ----------------------------------------
+	componentDidCatch() { }
+	componentDidMount = () => {}
+
+	render() {
+		return (
+			<AppCtx.Provider value={{ ...this.state, ...this.actions }}>
+				{this.props.children}
+			</AppCtx.Provider>
+		)
+
+	}
+}
+
+export { AppContext }
+export default AppCtx
