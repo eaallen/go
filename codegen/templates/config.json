@@ -1,0 +1,17 @@
+{
+  "react-function": {
+		"default_name": "basic_function_comp_RENAME_ME_THIS_WAS_GENERATED",
+		"ext":          ".js",
+		"path":         "react/basic_function_comp.txt"
+	},
+	"react-class": {
+		"default_name": "basic_class_comp",
+		"ext":          ".js",
+		"path":         "react/basic_class_comp.txt"
+	},
+	"go-main": {
+		"default_name": "generated_main",
+		"ext":          ".go",
+		"path":         "go/main.txt"
+	}
+}

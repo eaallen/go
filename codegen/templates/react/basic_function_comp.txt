@@ -1,0 +1,5 @@
+import React from 'react'
+
+export default function basic_function_comp_RENAME_ME_THIS_WAS_GENERATED(props){
+  return <> </>
+}
