@@ -24,9 +24,25 @@
       "default_name": "generated_main",
       "ext": ".go",
       "path": "go/main.txt"
+    },
+    "html": {
+      "default_name": "generated_index",
+      "ext": ".html",
+      "path": "web-basic/html.txt"
+    },
+    "js": {
+      "default_name": "generated_index",
+      "ext": ".js",
+      "path": "web-basic/js.txt"
+    },
+    "css": {
+      "default_name": "generated_styles",
+      "ext": ".css",
+      "path": "web-basic/css.txt"
     }
   },
   "batch":{
-    "react-context":["react-app-context","react-with-app-context"]
+    "react-context":["react-app-context","react-with-app-context"],
+    "web-basic":["html","css","js"]
   }
 }

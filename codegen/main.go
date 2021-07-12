@@ -49,6 +49,7 @@ func main() {
 		config := GetConfig()
 		templates := []map[string]string{}
 
+		// handle getting template data
 		if options.batch != "" {
 			used_flag = "batch"
 			// get batch data
@@ -60,19 +61,23 @@ func main() {
 			templates = append(templates, config.Template[options.template_name])
 		}
 
+		// if tempaltes are empty then the user did not enter a valid key
 		if len(templates) == 0 {
-			color.Red("Error: " + used_flag + " or batch key not found!")
+			color.Red("Error: " + used_flag + " key not found!")
 			return
 		}
 
+		// create template for each template data
 		for _, template_data := range templates {
 			// eventualy direct path to template location
-			data, err := ioutil.ReadFile("C:/go/github.com/eaallen/go/codegen/templates/" + template_data["path"])
+			data, err := ioutil.ReadFile(
+				"C:/go/github.com/eaallen/go/codegen/templates/" + template_data["path"],
+			)
 			Check(err)
 			name := GetName(options.name, template_data["default_name"])
 			path := GetPath(options.path)
 			fullpath := path + GetEnviromentSlash() + name + template_data["ext"]
-			err = WriteToFile(fullpath, string(data))
+			err = WriteToFile(fullpath, string(data)) // create the template
 			Check(err)
 			color.Green("Successfully built " + name + " at " + fullpath)
 		}
@@ -116,7 +121,7 @@ func Usage() {
 
 func GetConfig() Config {
 	// Open our jsonFile
-	jsonFile, err := os.Open("./templates/config.json")
+	jsonFile, err := os.Open("C:/go/github.com/eaallen/go/codegen/templates/config.json")
 	Check(err)
 	// defer the closing of our jsonFile so that we can parse it later on
 	defer jsonFile.Close()
