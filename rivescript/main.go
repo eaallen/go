@@ -23,7 +23,7 @@ import (
 )
 
 // Build is the git commit hash that the binary was built from.
-var Build = "-unknown-"
+var Build = "0.0.1"
 
 var (
 	// Command line arguments.
